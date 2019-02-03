@@ -1,0 +1,26 @@
+.message {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.messageInfo {
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 2px;
+}
+
+.messageAuthor {
+    font-weight: bold;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.messageTime {
+    font-size: 11px;
+    vertical-align: baseline;
+}
+
+.messageText {
+    font-size: 14px;
+}
