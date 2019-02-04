@@ -49,7 +49,7 @@ class Chat extends Component {
         }
 
         this.sendMessage = (event) => {
-            if (event.key === 'Enter') {
+            if (event.key === 'Enter' && /\S/.test(this.state.input)) {
                 let d = new Date();
                 d = ('0' + d.getDate()).slice(-2) + '/' + ('0' + (d.getMonth() + 1)).slice(-2) + '/' + ('' + d.getFullYear()).slice(2) +  " at " + ('0' + d.getHours()).slice(-2) + ":" + ('0' + d.getMinutes()).slice(-2);
                 
@@ -67,7 +67,6 @@ class Chat extends Component {
         }
     }
 
-
     componentDidMount() {
         this.scrollToBottom();
     }
@@ -80,22 +79,23 @@ class Chat extends Component {
         return (
             <div className="chatContainer">
                 <div className="innerChatContainer">
-                    <div className="chatTextBox">
+                    <div className="chatTextBox" id="scroll">
                         {this.state.messages.map((msg, i) => {
                             const previous = this.state.messages[i - 1];
                             let author = msg.author;
                             let time = msg.time;
 
                             if (i !== 0 && author === previous.author &&
-                                time.substr(0, 15) === previous.time.substr(0, 15)) {
-                                    author = "";
-                                    time = "";
+                              compareTime(previous.time, time)) {
+                                author = "";
+                                time = "";
                             }
                             return (
                                 <Message
                                     author={author}
                                     time={time}
-                                    text={msg.text} />
+                                    text={msg.text}
+                                    key={i} />
                             );
                         })}
                         <div style={{float: "left", clear: "both"}} ref={(el) => { this.messagesEnd = el }}></div>
@@ -113,6 +113,18 @@ class Chat extends Component {
                 </div>
         );
     }
+}
+
+function compareTime(prev, curr) {
+    const prevMins = parseInt(prev.substr(15));
+    const mins = parseInt(curr.substr(15));
+
+    if (prev.substr(0, 15) === curr.substr(0, 15) &&
+      mins <= prevMins + 2 &&
+      mins >= prevMins - 2) {
+        return true;
+    }
+    return false;
 }
 
 export default Chat;

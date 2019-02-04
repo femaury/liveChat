@@ -1,5 +1,4 @@
 const express = require('express');
-const socket = require('socket.io');
 
 const app = express();
 
@@ -9,7 +8,9 @@ server = app.listen(3000, function() {
     console.log('server is running on port 3000');
 });
 
-io = socket(server);
+const io = require('socket.io')(server, {
+    pingTimeout: 60000,
+});
 
 io.on('connection', (socket) => {
     socket.on('sendMessage', function(data) {

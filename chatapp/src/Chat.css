@@ -23,7 +23,24 @@
     height: 95%;
     padding: 20px 15px;
     color: rgb(189, 212, 221);
-    overflow-y: scroll;
+    overflow-y: auto;
+}
+
+#scroll::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #000000;
+}
+
+#scroll::-webkit-scrollbar
+{
+	background-color: #000000;
+}
+
+#scroll::-webkit-scrollbar-thumb
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #1C5F97;
 }
 
 .chatInputBox {
@@ -41,6 +58,8 @@
     background-color: rgb(18, 18, 18);
     font-size: 14px;
     padding: 0 8px;
+    outline: none;
+    color: white;
 }
 
 .chatSend {
@@ -49,6 +68,7 @@
     border: none;
     background-color: rgb(18, 18, 18);
     font-size: 14px;
+    color: white;
 }
 
 .chatSend:hover {
