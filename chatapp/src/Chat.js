@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Message from './Message';
 import './Chat.css';
 import io from 'socket.io-client';
+import compareTime from './utils/compareTime';
+import getFormattedDate from './utils/getFormattedDate';
+import formatTime from './utils/formatTime';
 
 const ROUTE = 'http://localhost:3000';
 const LIMIT_STEP = 50;
@@ -36,7 +39,7 @@ class Chat extends Component {
             if (/\S/.test(this.state.input)) {
                 event.preventDefault();
                 let d = new Date();
-                d = getDate(true);
+                d = getFormattedDate(true);
 
                 this.socket.emit('sendMessage', {
                     user_name: this.state.username,
@@ -151,73 +154,6 @@ class Chat extends Component {
                 </div>
         );
     }
-}
-
-function compareTime(prev, curr) {
-    const prevMins = parseInt(prev.substr(15));
-    const mins = parseInt(curr.substr(15));
-
-    if (prev.substr(0, 15) === curr.substr(0, 15) &&
-      mins <= prevMins + 2 &&
-      mins >= prevMins - 2) {
-        return true;
-    }
-    return false;
-}
-
-function formatTime(date) {
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    let today = new Date();
-    let otherDay = invertMonthDay(date.substr(0, 8));
-    const dayOfWeek = today.getDay();
-
-    const diff = Math.abs(daysDiff(new Date(otherDay), today));
-
-    switch (diff) {
-        case 0:
-            return date.substr(12);
-        case 1:
-            return "Yesterday " + date.substr(9);
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-        case 6:
-            return "Last " + days[(((dayOfWeek - diff) % 7) + 7) % 7] + date.substr(9);
-        default:
-            return date.substr(0, 8); 
-    }
-}
-
-function getDate(hours) {
-    var d = new Date();
-
-    var dd = ('0' + d.getDate()).slice(-2);
-    var mm = ('0' + (d.getMonth() + 1)).slice(-2);
-    var yy = ('' + d.getFullYear()).slice(2);
-
-    if (hours) {
-        var hh = ('0' + d.getHours()).slice(-2);
-        var min = ('0' + d.getMinutes()).slice(-2);
-        var today = dd + '/' + mm + '/' + yy + ' at ' + hh + ':' + min;
-    } else {
-        var today = dd + '/' + mm + '/' + yy;
-    }
-    return today;
-}
-
-function invertMonthDay(date) {
-    const dd = date.slice(0, 3);
-    const mm = date.slice(3, 6);
-    const yy = date.slice(6);
-    return mm.concat(dd, yy);
-}
-
-function daysDiff(date1, date2) {
-    const utc1 = Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate());
-    const utc2 = Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate());
-  
-    return Math.floor((utc2 - utc1) / (1000 * 3600 * 24));
 }
 
 export default Chat;
