@@ -1,0 +1,79 @@
+.connectBar {
+    width: 100%;
+    height: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(17, 19, 20);
+    color: white;
+}
+
+.connectBar:hover {
+    background-color: #1C5F97;
+    cursor: pointer;
+}
+
+.wrapModal {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.connModal {
+    width: 350px;
+    height: 350px;
+    background: linear-gradient(rgb(39, 39, 39), rgb(31, 31, 31));
+    z-index: 11;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.loginForm {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loginForm input {
+    color: white;
+    background-color: #141414;
+    width: 60%;
+    height: 40px;
+    border: none;
+    padding: 0 10px;
+    font-size: 16px;
+}
+
+.loginForm label {
+    width: 60%;
+    padding: 15px;
+    margin-top: 30px;
+    color: white;
+}
+
+.connMenu {
+    display: flex;
+}
+
+.connMenuItem {
+    width: 50%;
+    padding: 15px;
+    /* background-color: rgb(51, 51, 51); */
+    color: white;
+    text-align: center;
+}
+
+.connMenuItem:hover {
+    cursor: pointer;
+    background-color: black;
+}

@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import Message from './Message';
-import './Chat.css';
+import ChatInput from './ChatInput';
 import io from 'socket.io-client';
 import compareTime from './utils/compareTime';
-import getFormattedDate from './utils/getFormattedDate';
 import formatTime from './utils/formatTime';
+
+import './css/Chat.css';
 
 const ROUTE = 'http://localhost:3000';
 const LIMIT_STEP = 50;
+
 
 class Chat extends Component {
     constructor(props) {
@@ -22,33 +24,9 @@ class Chat extends Component {
 
         this.socket = io('localhost:3000');
 
-        this.socket.on('receiveMessage', function(data) {
-            addMessage(data);
-        })
-
-        const addMessage = (data) => {
+        this.socket.on('receiveMessage', (data) => {
             this.setState({ messages: [...this.state.messages, data] });
-        }
-
-        this.submitInput = (event) => {
-            if (event.key === 'Enter')
-                this.sendMessage(event);
-        }
-
-        this.sendMessage = (event) => {
-            if (/\S/.test(this.state.input)) {
-                event.preventDefault();
-                let d = new Date();
-                d = getFormattedDate(true);
-
-                this.socket.emit('sendMessage', {
-                    user_name: this.state.username,
-                    time: d,
-                    text: this.state.input
-                });
-                this.setState({ input: '' });
-            }
-        }
+        })
 
         this.onScroll = () => {
             const { refs } = this;
@@ -68,7 +46,7 @@ class Chat extends Component {
             fetch(`${ROUTE}/chatMessages`, {
                 method: 'POST',
                 body: JSON.stringify({
-                    limit: limit,
+                    limit
                 }),
                 headers: {"Content-Type": "application/json"}
             })
@@ -91,7 +69,6 @@ class Chat extends Component {
     componentWillUpdate(_, nextState) {
         this.historyChanged = nextState.messages.slice(0, LIMIT_STEP) !== this.state.messages.slice(0, LIMIT_STEP);
         if (this.historyChanged) {
-            console.log('test');
             const { messageList } = this.refs;
             const scrollPos = messageList.scrollTop;
             const scrollBottom = (messageList.scrollHeight - messageList.clientHeight);
@@ -114,6 +91,10 @@ class Chat extends Component {
     }
 
     render() {
+        const bottomBar = this.props.auth ?
+            <ChatInput socket={this.socket} username={this.state.username} /> :
+            <div className="connectBar" onClick={this.props.toggleModal}>JOIN THE CHAT</div>;
+
         return (
             <div className="chatContainer">
                 <div className="innerChatContainer">
@@ -124,34 +105,20 @@ class Chat extends Component {
                             const previous = this.state.messages[i - 1];
 
                             if (i !== 0 && author === previous.user_name &&
-                                compareTime(previous.time, time)) {
+                              compareTime(previous.time, time)) {
                                 author = "";
                                 time = "";
                             } else {
                                 time = formatTime(time);
                             }
 
-                            return (
-                                <Message
-                                    author={author}
-                                    time={time}
-                                    text={msg.text}
-                                    key={i} />
-                            );
+                            return <Message author={author} time={time} text={msg.text} key={i} />;
                         })}
                         <div style={{float: "left", clear: "both"}} ref={(el) => { this.messagesEnd = el }}></div>
                     </div>
-                    <div className="chatInputBox">
-                        <input
-                            placeholder="Message..."
-                            className="chatInput"
-                            value={this.state.input}
-                            onChange={(e) => this.setState({ input: e.target.value }) }
-                            onKeyDown={this.submitInput} />
-                        <button className="chatSend" onClick={this.sendMessage}>Send</button>
-                    </div>
+                    {bottomBar}
                 </div>
-                </div>
+            </div>
         );
     }
 }

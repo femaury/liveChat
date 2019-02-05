@@ -1,0 +1,32 @@
+.chatInputBox {
+    width: 100%;
+    height: 5%;
+    display: flex;
+    background-color: rgb(17, 19, 20);
+}
+
+.chatInput {
+    height: 100%;
+    width: 90%;
+    box-sizing: border-box;
+    border: none;
+    background-color: rgb(18, 18, 18);
+    font-size: 14px;
+    padding: 0 8px;
+    outline: none;
+    color: white;
+}
+
+.chatSend {
+    height: 100%;
+    width: 10%;
+    border: none;
+    background-color: rgb(18, 18, 18);
+    font-size: 14px;
+    color: white;
+}
+
+.chatSend:hover {
+    background-color: #1C5F97;
+    cursor: pointer;
+}
