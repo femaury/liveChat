@@ -42,18 +42,3 @@
 	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	background-color: #1C5F97;
 }
-
-.connectBar {
-    width: 100%;
-    height: 5%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(17, 19, 20);
-    color: white;
-}
-
-.connectBar:hover {
-    background-color: #1C5F97;
-    cursor: pointer;
-}
