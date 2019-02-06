@@ -3,6 +3,8 @@ import getFormattedDate from './utils/getFormattedDate';
 
 import './css/ChatInput.css';
 
+const ROUTE = 'http://localhost:3000';
+
 class ChatInput extends Component {
     constructor(props) {
         super(props);
@@ -18,14 +20,28 @@ class ChatInput extends Component {
         this.sendMessage = (event) => {
             if (/\S/.test(this.state.input)) {
                 event.preventDefault();
-                let d = new Date();
-                d = getFormattedDate(true);
+                const token = localStorage.getItem('token');
+                const d = getFormattedDate(true);
 
-                this.props.socket.emit('sendMessage', {
-                    user_name: this.props.username,
-                    time: d,
-                    text: this.state.input
-                });
+                fetch(`${ROUTE}/sendMessage`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json', authorization: token },
+                    body: JSON.stringify({
+                        username: this.props.username,
+                        time: d,
+                        text: this.state.input
+                    })
+                })
+                .then(res => res.json())
+                .then(res => {
+                    if (res.success) {
+                        this.props.socket.emit('sendMessage', {
+                            user_name: this.props.username,
+                            time: d,
+                            text: this.state.input
+                        });
+                    }
+                 })
                 this.setState({ input: '' });
             }
         }

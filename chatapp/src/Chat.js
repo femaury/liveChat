@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Message from './Message';
 import ChatInput from './ChatInput';
-import io from 'socket.io-client';
 import compareTime from './utils/compareTime';
 import formatTime from './utils/formatTime';
 
@@ -16,15 +15,12 @@ class Chat extends Component {
         super(props);
 
         this.state  = {
-            username: 'Meme Lord',
             input: '',
             messages: [],
             limit: LIMIT_STEP
         };
 
-        this.socket = io('localhost:3000');
-
-        this.socket.on('receiveMessage', (data) => {
+        this.props.socket.on('receiveMessage', (data) => {
             this.setState({ messages: [...this.state.messages, data] });
         })
 
@@ -92,7 +88,7 @@ class Chat extends Component {
 
     render() {
         const bottomBar = this.props.auth ?
-            <ChatInput socket={this.socket} username={this.state.username} /> :
+            <ChatInput socket={this.props.socket} username={this.props.username} /> :
             <div className="connectBar" onClick={this.props.toggleModal}>JOIN THE CHAT</div>;
 
         return (

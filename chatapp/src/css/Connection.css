@@ -26,7 +26,7 @@
 
 .connModal {
     width: 350px;
-    height: 350px;
+    height: 500px;
     background: linear-gradient(rgb(39, 39, 39), rgb(31, 31, 31));
     z-index: 11;
     display: flex;
@@ -34,6 +34,7 @@
     justify-content: space-between;
     border-radius: 10px;
     overflow: hidden;
+    box-shadow: 0 0 10px 1px #1C5F97;
 }
 
 .loginForm {
@@ -42,6 +43,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* justify-content: space-evenly; */
 }
 
 .loginForm input {
@@ -52,13 +54,43 @@
     border: none;
     padding: 0 10px;
     font-size: 16px;
+    flex-shrink: 0;
 }
 
-.loginForm label {
+.labelWrap {
     width: 60%;
     padding: 15px;
-    margin-top: 30px;
+    padding-left: 0;
+    margin-top: 20px;
+    flex-shrink: 0;
+    color: red;
+    font-size: 10px;
+}
+
+.formLabel {
     color: white;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.formLabel > :first-child {
+    margin-top: 30px;
+}
+
+.submitBtn {
+    width: 230px;
+    height: 40px;
+    margin-top: 50px;
+    background-color: #1C5F97;
+    color: white;
+    font-size: 16px;
+    border: none;
+    flex-shrink: 0;
+}
+
+.submitBtn:hover {
+    cursor: pointer;
+    opacity: 0.7;
 }
 
 .connMenu {
