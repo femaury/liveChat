@@ -7,7 +7,7 @@ const pool = mysql.createPool({
     database: 'soir'
 });
 
-const chatQuery = 'CREATE TABLE IF NOT EXISTS chat ( \
+const chatQuery = 'CREATE TABLE IF NOT EXISTS chat_msg ( \
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, \
     user_name VARCHAR(25) NOT NULL, \
     time TINYTEXT NOT NULL, \
@@ -15,7 +15,7 @@ const chatQuery = 'CREATE TABLE IF NOT EXISTS chat ( \
 
 const userQuery = 'CREATE TABLE IF NOT EXISTS chat_users ( \
     user_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, \
-    user_name VARCHAR(25) UNIQUE NOT NULL, \
+    username VARCHAR(25) UNIQUE NOT NULL, \
     passwd VARCHAR(500) NOT NULL)';
 
 pool.getConnection((err, connection) => {

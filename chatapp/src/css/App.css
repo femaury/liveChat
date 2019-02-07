@@ -33,29 +33,25 @@
 .userContainer::-webkit-scrollbar { width: 0 !important }
 .userContainer { -ms-overflow-style: none; }
 
-.user {
+.disconnect {
   width: 75px;
   height: 75px;
   margin: 10px;
-  border: 2px solid rgb(33, 112, 177);
+  border: 2px solid rgb(0, 0, 0);
+  background-color: red;
   border-radius: 500%;
-  box-shadow: 0 0 20px 2px rgb(33, 112, 177);
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
   object-fit: none;
 }
 
-.user:hover {
-  border: 2px solid rgb(158, 0, 197);
-  box-shadow: 0 0 30px 3px rgb(158, 0, 197);
+.disconnect:hover {
+  box-shadow: 0 0 20px 2px red;
+  border: 2px solid red;
   cursor: pointer;
 }
 
-.userLogo {
-  width: 150%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.disconnect img {
+  width: 75px;
 }

@@ -25,7 +25,7 @@ export default function(date) {
         case 4:
         case 5:
         case 6:
-            return "Last " + days[(((dayOfWeek - diff) % 7) + 7) % 7] + date.substr(9);
+            return "Last " + days[(((dayOfWeek - diff) % 7) + 7) % 7] + date.substr(8);
         default:
             return date.substr(0, 8); 
     }

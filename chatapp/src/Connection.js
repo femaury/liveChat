@@ -44,6 +44,8 @@ class Connection extends Component {
                             username: this.state.username
                         })
                         localStorage.setItem('token', res.token);
+                        localStorage.setItem('user', this.state.username);
+                        this.props.connectUser();
                     } else if (res.success_signup) {
                         this.setState({ login: true, username: '', password: '', passwordCheck: '' });
                     }

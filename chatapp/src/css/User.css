@@ -5,7 +5,6 @@
     border: 2px solid rgb(33, 112, 177);
     border-radius: 500%;
     box-shadow: 0 0 20px 2px rgb(33, 112, 177);
-    position: relative;
     overflow: hidden;
     flex-shrink: 0;
     object-fit: none;
@@ -14,13 +13,34 @@
   .user:hover {
     border: 2px solid rgb(158, 0, 197);
     box-shadow: 0 0 30px 3px rgb(158, 0, 197);
-    cursor: pointer;
   }
   
   .userLogo {
     width: 150%;
-    position: absolute;
+    position: relative;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
+
+  .nameHover {
+    display: none;
+    position: absolute;
+    left: calc(50vw + 520px);
+    top: auto;
+    margin-top: -50px;
+    margin-left: 35px;
+    padding: 5px 10px;
+    background-color: black;
+    border: 2px solid rgb(158, 0, 197);
+    box-shadow: 0 0 20px 2px rgb(158, 0, 197);
+    color: rgb(158, 0, 197);
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+    z-index: 100;
+  }
+
+  .user:hover > .nameHover {
+    display: block;
+  } 

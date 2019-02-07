@@ -23,29 +23,15 @@ class ChatInput extends Component {
                 const token = localStorage.getItem('token');
                 const d = getFormattedDate(true);
 
-                fetch(`${ROUTE}/sendMessage`, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json', authorization: token },
-                    body: JSON.stringify({
-                        username: this.props.username,
-                        time: d,
-                        text: this.state.input
-                    })
-                })
-                .then(res => res.json())
-                .then(res => {
-                    if (res.success) {
-                        this.props.socket.emit('sendMessage', {
-                            user_name: this.props.username,
-                            time: d,
-                            text: this.state.input
-                        });
-                    }
-                 })
+                this.props.socket.emit('sendMessage', {
+                    username: this.props.username,
+                    time: d,
+                    text: this.state.input,
+                    token
+                });
                 this.setState({ input: '' });
             }
         }
-
     }
 
     render() {

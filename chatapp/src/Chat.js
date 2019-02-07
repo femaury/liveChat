@@ -96,11 +96,11 @@ class Chat extends Component {
                 <div className="innerChatContainer">
                     <div className="chatTextBox" id="scroll" ref="messageList" onScroll={this.onScroll}>
                         {this.state.messages.map((msg, i) => {
-                            let author = msg.user_name;
+                            let author = msg.username;
                             let time = msg.time;
                             const previous = this.state.messages[i - 1];
 
-                            if (i !== 0 && author === previous.user_name &&
+                            if (i !== 0 && author === previous.username &&
                               compareTime(previous.time, time)) {
                                 author = "";
                                 time = "";
