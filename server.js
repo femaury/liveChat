@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 
 const chatConnection = require('./connection');
 
+require('./botross');
+
 const app = express();
 const onlineUsers = new Map();
 const secret = 'localtestingsecret';
