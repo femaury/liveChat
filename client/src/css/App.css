@@ -8,21 +8,18 @@
 }
 
 .dummyWidth {
-  margin-right: 50px;
-  width: 200px;
+  margin-right: 3vh;
+  width: 13vh;
 }
 
 .scrollWrapper {
-  margin-left: 50px;
+  margin-left: 3vh;
   overflow: hidden;
-  min-width: 80px;
-  width: 180px;
+  width: 15vh;
 }
 
 .userContainer {
-  min-width: 100px;
-  width: 200px;
-  min-height: 1000px;
+  width: 13vh;
   height: 80vh;
   display: flex;
   flex-direction: column;
@@ -34,8 +31,8 @@
 .userContainer { -ms-overflow-style: none; }
 
 .disconnect {
-  width: 75px;
-  height: 75px;
+  width: 6vh;
+  height: 6vh;
   margin: 10px;
   border: 2px solid rgb(0, 0, 0);
   background-color: red;
@@ -53,5 +50,5 @@
 }
 
 .disconnect img {
-  width: 75px;
+  width: 100%;
 }

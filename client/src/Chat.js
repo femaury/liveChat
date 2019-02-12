@@ -17,11 +17,29 @@ class Chat extends Component {
         this.state  = {
             input: '',
             messages: [],
-            limit: LIMIT_STEP
+            limit: LIMIT_STEP,
+            typing: []
         };
 
         this.props.socket.on('receiveMessage', (data) => {
             this.setState({ messages: [...this.state.messages, data] });
+            
+            if (typeof Notification !== 'undefined' && data.username !== 'CO' && data.username !== localStorage.getItem('user')) {
+                new Notification("Soir chat new message", {
+				    body: `${data.username}: ${data.text}`,
+				    icon: "https://soir.wtf/favicon.png"
+                });
+            }
+        })
+
+        this.props.socket.on('updateTyping', (data) => {
+            const typing = this.state.typing;
+            
+            if (typing.includes(data.username))
+                typing.splice(typing.indexOf(data.username), 1);
+            else 
+                typing.push(data.username);
+            this.setState({ typing });
         })
 
         this.onScroll = () => {
@@ -36,6 +54,10 @@ class Chat extends Component {
                 })
                 this.fetchHistory(limit);
             }
+        }
+
+        this.updateTyping = () => {
+            this.props.socket.emit('userTyping');
         }
 
         this.fetchHistory = (limit) => {
@@ -88,8 +110,21 @@ class Chat extends Component {
 
     render() {
         const bottomBar = this.props.auth ?
-            <ChatInput socket={this.props.socket} username={this.props.username} /> :
+            <ChatInput
+                socket={this.props.socket}
+                username={this.props.username}
+                updateTyping={this.updateTyping}
+                disconnectUser={this.props.disconnectUser}
+                mobile={this.props.mobile} /> :
             <div className="connectBar" onClick={this.props.toggleModal}>JOIN THE CHAT</div>;
+
+        let userTyping = '';
+        if (this.state.typing.length === 1)
+            userTyping = this.state.typing[0] + " is typing...";
+        else if (this.state.typing.length === 2)
+            userTyping = this.state.typing[0] + " and " + this.state.typing[1] + " are typing...";
+        else if (this.state.typing.length > 2)
+            userTyping = this.state.typing.length + " users are typing..."
 
         return (
             <div className="chatContainer">
@@ -99,6 +134,16 @@ class Chat extends Component {
                             let author = msg.username;
                             let time = msg.time;
                             const previous = this.state.messages[i - 1];
+
+                            if (author === 'CO') {
+                                const id = msg.text.includes('joined') ? 'joined' : 'left';
+
+                                return (
+                                    <div className="connectionMsg">
+                                        <div className="connectionTxt" id={id}>{msg.text}</div>
+                                    </div>
+                                );
+                            }
 
                             if (i !== 0 && author === previous.username &&
                               compareTime(previous.time, time)) {
@@ -112,6 +157,7 @@ class Chat extends Component {
                         })}
                         <div style={{float: "left", clear: "both"}} ref={(el) => { this.messagesEnd = el }}></div>
                     </div>
+                    {userTyping !== '' && <div className="userTyping">{userTyping}</div>}
                     {bottomBar}
                 </div>
             </div>

@@ -1,6 +1,8 @@
 export default function(prev, curr) {
     // Checks if messages are withing 4 min range
     
+    if (prev === curr)
+        return true;
     const prevMins = parseInt(prev.substr(15));
     const mins = parseInt(curr.substr(15));
 

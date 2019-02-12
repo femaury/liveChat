@@ -11,7 +11,7 @@
     box-sizing: border-box;
     border: none;
     background-color: rgb(18, 18, 18);
-    font-size: 14px;
+    font-size: calc(10px + (14 - 10) * ((100vh - 600px) / (1080 - 600)));
     padding: 0 8px;
     outline: none;
     color: white;
@@ -22,11 +22,22 @@
     width: 10%;
     border: none;
     background-color: rgb(18, 18, 18);
-    font-size: 14px;
+    font-size: calc(10px + (14 - 10) * ((100vh - 600px) / (1080 - 600)));
     color: white;
 }
 
 .chatSend:hover {
     background-color: #1C5F97;
     cursor: pointer;
+}
+
+.disconnectMobile {
+    height: 100%;
+    width: 10%;
+    border: none;
+    background-color: red;
+}
+
+.disconnectMobile img {
+    height: 20px;
 }

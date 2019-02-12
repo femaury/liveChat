@@ -1,0 +1,33 @@
+.message {
+    width: 100%;
+    margin-bottom: 1vh;
+}
+
+.messageInfo {
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 2px;
+}
+
+.messageAuthor {
+    font-weight: bold;
+    font-size: calc(14px + (18 - 14) * ((100vh - 600px) / (1080 - 600)));
+    margin-right: 10px;
+    color: rgb(86, 129, 148);
+}
+
+.messageTime {
+    font-size: calc(8px + (11 - 8) * ((100vh - 600px) / (1080 - 600)));
+    opacity: 0.7;
+    vertical-align: baseline;
+}
+
+.messageText {
+    font-size: calc(9px + (13 - 9) * ((100vh - 600px) / (1080 - 600)));
+    overflow-wrap: break-word;
+}
+
+.messageText a {
+    color: rgb(189, 212, 221);
+}

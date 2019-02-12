@@ -17,21 +17,14 @@ class App extends Component {
       modal: false,
       online: [],
       username: 'Anonymous',
-      token: ''
+      token: '',
+      width: window.innerWidth
     }
     
-    this.socket = io('localhost:3000');
+    this.socket = io(ROUTE);
 
-    this.socket.on('addOnlineUser', (data) => {
-        this.setState({
-          online: [...this.state.online, data.username]
-        })
-    })
-
-    this.socket.on('removeOnlineUser', (data) => {
-      const online = this.state.online;
-      online.splice(online.indexOf(data.username), 1);
-      this.setState({ online });
+    this.socket.on('updateOnlineUsers', (data) => {
+      this.setState({ online: data.online })
     })
 
     this.toggleModal = () => {
@@ -41,8 +34,10 @@ class App extends Component {
     this.connectUser = () => {
       const username = localStorage.getItem('user');
       const token = localStorage.getItem('token');
-      if (username && token)
+      if (username && token) {
         this.setState({ auth: true, modal: false, token, username });
+        this.socket.emit('userConnected', { username });
+      }
     }
 
     this.disconnectUser = () => {
@@ -60,12 +55,22 @@ class App extends Component {
         })
       }
     }
+
+    this.handleWindowSize = () => {
+      this.setState({ width: window.innerWidth });
+    }
   }
   
+  componentWillMount() {
+    window.addEventListener('resize', this.handleWindowSize);
+  }
+
   componentDidMount() {
     this.connectUser();
+    if (typeof Notification !== 'undefined')
+	    Notification.requestPermission();
     
-    fetch(`${ROUTE}/getUsersOnline`, {
+    fetch(`${ROUTE}/getOnlineUsers`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }
     })
@@ -75,25 +80,34 @@ class App extends Component {
     })
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowSize);
+  }
+
   render() {
+    const mobile = this.state.width <= 500;
+
     return (
       <div className="appContainer">
         {this.state.modal && <Connection toggleModal={this.toggleModal} socket={this.socket} connectUser={this.connectUser} />}
-        <div className="dummyWidth" />
+        {!mobile && <div className="dummyWidth" />}
         <Chat
           auth={this.state.auth}
           toggleModal={this.toggleModal}
           socket={this.socket}
-          username={this.state.username} />
-        <div className="scrollWrapper">
+          username={this.state.username}
+          disconnectUser={this.disconnectUser}
+          mobile={mobile} />
+        {!mobile && <div className="scrollWrapper">
           <div className="userContainer">
             { this.state.auth && <div className="disconnect" onClick={this.disconnectUser}><img src={xicon} alt="" title="Disconnect" /></div> }
             { this.state.online.map((name) => {
-              if (this.state.username != name)
+              if (this.state.username !== name)
                 return <User name={name} key={name} />
+              return null;
             })}
           </div>
-        </div>
+        </div>}
       </div>
     );
   }

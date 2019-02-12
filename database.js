@@ -9,7 +9,7 @@ const pool = mysql.createPool({
 
 const chatQuery = 'CREATE TABLE IF NOT EXISTS chat_msg ( \
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY, \
-    user_name VARCHAR(25) NOT NULL, \
+    username VARCHAR(25) NOT NULL, \
     time TINYTEXT NOT NULL, \
     text TEXT NOT NULL)';
 
@@ -21,10 +21,11 @@ const userQuery = 'CREATE TABLE IF NOT EXISTS chat_users ( \
 pool.getConnection((err, connection) => {
     if (err) throw err;
 
-    connection.query(userQuery, (err) => { if (err) throw err });
-    connection.query(chatQuery, (err) => {        
-        connection.release();
-        if (err) throw err;
+    connection.query(userQuery, (err) => { if (err) throw err
+        connection.query(chatQuery, (err) => {        
+            connection.release();
+            if (err) throw err;
+        });
     });
 })
 

@@ -26,7 +26,7 @@ class Connection extends Component {
                 this.setState({ err_passcheck: 'invalid'});
                 return;
             } else {
-                fetch(`${ROUTE}/connection`, {
+                fetch(`${ROUTE}/chatConnection`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
@@ -40,9 +40,6 @@ class Connection extends Component {
                     if (res.error) {
                         this.setState(res.error);
                     } else if (res.success_login) {
-                        this.props.socket.emit('userConnected', {
-                            username: this.state.username
-                        })
                         localStorage.setItem('token', res.token);
                         localStorage.setItem('user', this.state.username);
                         this.props.connectUser();

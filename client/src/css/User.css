@@ -1,6 +1,6 @@
 .user {
-    width: 75px;
-    height: 75px;
+    width: 6vh;
+    height: 6vh;
     margin: 10px;
     border: 2px solid rgb(33, 112, 177);
     border-radius: 500%;
@@ -26,17 +26,17 @@
   .nameHover {
     display: none;
     position: absolute;
-    left: calc(50vw + 520px);
+    left: auto;
     top: auto;
-    margin-top: -50px;
-    margin-left: 35px;
+    margin-top: -3.5vh;
+    margin-left: 2vh;
     padding: 5px 10px;
     background-color: black;
     border: 2px solid rgb(158, 0, 197);
     box-shadow: 0 0 20px 2px rgb(158, 0, 197);
     color: rgb(158, 0, 197);
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 1.2vh;
     text-align: center;
     z-index: 100;
   }
